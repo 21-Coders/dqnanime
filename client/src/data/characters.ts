@@ -4,7 +4,7 @@ export interface Character {
   japaneseTitle: string;
   title: string;
   level: string;
-  description: string;
+
   imageUrl: string;
 }
 
@@ -15,7 +15,7 @@ export const characters: Character[] = [
     japaneseTitle: "アンドロイド・ア",
     title: "Android Assassin",
     level: "Combat Level: 97",
-    description: "Artificial intelligence designed for covert ops with advanced nano-enhancements and thermal optics.",
+    // description: "Artificial intelligence designed for covert ops with advanced nano-enhancements and thermal optics.",
     imageUrl: "/assets/Blood 1.webp"
   },
   {
@@ -24,7 +24,7 @@ export const characters: Character[] = [
     japaneseTitle: "ニューロ・ハッカー",
     title: "Neuro Hacker",
     level: "Tech Level: 92",
-    description: "Neural interface specialist who can hack any security system through direct brain connection.",
+    // description: "Neural interface specialist who can hack any security system through direct brain connection.",
     imageUrl: "/assets/Blood 2.webp"
   },
   {
@@ -33,7 +33,7 @@ export const characters: Character[] = [
     japaneseTitle: "ストリート・サムライ",
     title: "Street Samurai",
     level: "Strength Level: 95",
-    description: "Enhanced reflexes and blade-integrated limbs make this ex-military operative lethal in close combat.",
+    // description: "Enhanced reflexes and blade-integrated limbs make this ex-military operative lethal in close combat.",
     imageUrl: "/assets/Blood 3.webp"
   },
   {
@@ -42,7 +42,7 @@ export const characters: Character[] = [
     japaneseTitle: "サイバー・メディク",
     title: "Cyber Medic",
     level: "Medical Level: 98",
-    description: "Specialized in combat nanomedicine and field repairs of cybernetic implants during missions.",
+    // description: "Specialized in combat nanomedicine and field repairs of cybernetic implants during missions.",
     imageUrl: "/assets/Blood 4.webp"
   },
   {
@@ -51,7 +51,7 @@ export const characters: Character[] = [
     japaneseTitle: "ゴースト・インフィルトレーター",
     title: "Ghost Infiltrator",
     level: "Stealth Level: 99",
-    description: "Equipped with cutting-edge optical camouflage and sound dampening tech for perfect infiltration missions.",
+    // description: "Equipped with cutting-edge optical camouflage and sound dampening tech for perfect infiltration missions.",
     imageUrl: "/assets/Blood 5.webp"
   },
   {
@@ -60,7 +60,7 @@ export const characters: Character[] = [
     japaneseTitle: "サンダー・コンダクター",
     title: "Thunder Conductor",
     level: "Power Level: 94",
-    description: "Bio-engineered nervous system capable of generating and channeling massive electrical surges as weapons.",
+    // description: "Bio-engineered nervous system capable of generating and channeling massive electrical surges as weapons.",
     imageUrl: "/assets/Blood 6.webp"
   },
   {
@@ -69,7 +69,7 @@ export const characters: Character[] = [
     japaneseTitle: "サイコ・ブラスター",
     title: "Psycho Blaster",
     level: "Psionic Level: 96",
-    description: "Rare psychic mutation enhanced with cerebral implants allowing telekinetic assaults and mind manipulation.",
+    // description: "Rare psychic mutation enhanced with cerebral implants allowing telekinetic assaults and mind manipulation.",
     imageUrl: "/assets/Blood 3.webp"
   }
 ];

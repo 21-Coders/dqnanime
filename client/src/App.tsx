@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import { motion, AnimatePresence } from "framer-motion";
+import GlitchyCursor from "@/components/GlitchyCursor";
 
 function Router() {
   return (
@@ -20,7 +21,8 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="relative overflow-x-hidden">
+      <div className="relative overflow-x-hidden custom-cursor-active">
+        <GlitchyCursor />
         <Router />
         <Toaster />
       </div>

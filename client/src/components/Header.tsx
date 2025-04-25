@@ -1,298 +1,168 @@
-import { useState, useEffect, useRef } from "react";
-// import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from "wouter";
-import {
-	motion,
-	useScroll,
-	useTransform,
-	AnimatePresence,
-} from "framer-motion";
+"use client"
 
+import { useState, useEffect } from "react"
+import { Link, useLocation } from "wouter"
+import { Zap, Menu, X } from "lucide-react"
+
+// Navigation items
 const navItems = [
-	{ label: "HOME", japaneseLabel: "ホーム", href: "/" },
-	{ label: "CHARACTERS", japaneseLabel: "キャラクター", href: "/characters" },
-	{ label: "WORLD", japaneseLabel: "ワールド", href: "/world" },
-	{ label: "COMMUNITY", japaneseLabel: "コミュニティ", href: "/community" },
-];
+  { label: "HOME", href: "/" },
+  { label: "CHARACTERS", href: "/characters" },
+  { label: "WORLD", href: "/world" },
+  { label: "COMMUNITY", href: "/community" },
+]
 
-interface NavItemProps {
-	label: string;
-	japaneseLabel: string;
-	href: string;
-	isActive: boolean;
+export default function CyberpunkHeader() {
+  const [location] = useLocation()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [glitchActive, setGlitchActive] = useState(false)
+  const [hoverItem, setHoverItem] = useState<string | null>(null)
+
+  // Trigger random glitch effects
+  useEffect(() => {
+    const glitchInterval = setInterval(
+      () => {
+        setGlitchActive(true)
+        setTimeout(() => setGlitchActive(false), 200)
+      },
+      Math.random() * 5000 + 3000,
+    )
+
+    return () => clearInterval(glitchInterval)
+  }, [])
+
+  return (
+    <header className="fixed top-0 left-0 right-0 py-3 px-4 md:px-6 lg:px-12 bg-black/90 backdrop-blur-sm border-b border-red-900/50 z-50 shadow-[0_0_15px_rgba(255,0,0,0.3)]">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center relative">
+          <div
+            className={`relative ${glitchActive ? "animate-glitch" : ""}`}
+            onMouseEnter={() => setGlitchActive(true)}
+            onMouseLeave={() => setGlitchActive(false)}
+          >
+            {/* Logo with glitch effect */}
+            <div className="relative w-16 h-10 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img
+                  src="/assets/dqnlogo.svg"
+                  alt="logo"
+                  width={80}
+                  height={80}
+                  className={`w-16 h-auto ${glitchActive ? "opacity-0" : "opacity-100"} transition-opacity`}
+                />
+              </div>
+
+              {/* Glitch layers */}
+              <div
+                className={`absolute inset-0 flex items-center justify-center ${glitchActive ? "opacity-100" : "opacity-0"}`}
+              >
+                <img
+                  src="/assets/dqnlogo.svg"
+                  alt=""
+                  width={80}
+                  height={80}
+                  className="w-16 h-auto text-red-500 absolute transform translate-x-[2px] translate-y-[1px] opacity-70"
+                  style={{ filter: "drop-shadow(0 0 2px #ff0000)" }}
+                />
+                <img
+                  src="/assets/dqnlogo.svg"
+                  alt=""
+                  width={80}
+                  height={80}
+                  className="w-16 h-auto text-cyan-500 absolute transform -translate-x-[2px] -translate-y-[1px] opacity-70"
+                  style={{ filter: "drop-shadow(0 0 2px #00ffff)" }}
+                />
+              </div>
+
+              {/* Red glow */}
+              <div className="absolute inset-0 bg-red-500/20 rounded-full blur-xl transform scale-75 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+          </div>
+
+          <div className="ml-2 flex flex-col">
+            <span className="text-xs text-red-500 font-mono tracking-wider">
+              <span className="inline-block mr-1 animate-pulse">
+                <Zap size={10} className="inline" />
+              </span>
+              v1.0.0
+            </span>
+            <span className="text-[8px] text-red-700 font-mono">CYBERNETIC_OS</span>
+          </div>
+        </div>
+
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden flex items-center text-red-500 hover:text-red-400 transition-colors"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Desktop navigation */}
+        <nav className="hidden md:block w-auto">
+          <ul className="flex items-center gap-4 lg:gap-8">
+            {navItems.map((item) => (
+              <li key={item.label} className="relative group">
+                <Link href={item.href}>
+                  <a
+                    className={`block font-mono text-sm uppercase tracking-widest px-2 py-1 transition-colors relative overflow-hidden
+                      ${location === item.href ? "text-red-500" : "text-gray-400 hover:text-white"}`}
+                    onMouseEnter={() => setHoverItem(item.label)}
+                    onMouseLeave={() => setHoverItem(null)}
+                  >
+                    {/* Text with potential glitch effect */}
+                    <span
+                      className={`relative z-10 ${hoverItem === item.label || glitchActive ? "animate-textglitch" : ""}`}
+                    >
+                      {item.label}
+                    </span>
+
+                    {/* Active indicator */}
+                    {location === item.href && (
+                      <div className="absolute bottom-0 left-0 w-full h-0.5 bg-red-500 shadow-[0_0_5px_#ff0000]"></div>
+                    )}
+
+                    {/* Hover effect */}
+                    <div className="absolute inset-0 bg-red-900/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+
+                    {/* Scanline effect on hover */}
+                    <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-30">
+                      <div className="w-full h-full bg-gradient-to-b from-transparent via-red-500/10 to-transparent bg-size-200 animate-scanline"></div>
+                    </div>
+                  </a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      {/* Mobile navigation */}
+      <div
+        className={`md:hidden absolute top-full left-0 right-0 bg-black/95 border-b border-red-900/50 transform transition-transform duration-300 ${isMenuOpen ? "translate-y-0" : "-translate-y-full"}`}
+      >
+        <nav className="container mx-auto py-4">
+          <ul className="flex flex-col items-center gap-6">
+            {navItems.map((item) => (
+              <li key={item.label} className="relative w-full text-center">
+                <Link href={item.href}>
+                  <a
+                    className={`block font-mono text-lg uppercase tracking-widest py-2 ${
+                      location === item.href ? "text-red-500" : "text-gray-400"
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                    {location === item.href && (
+                      <div className="absolute bottom-0 left-1/4 w-1/2 h-px bg-red-500 shadow-[0_0_5px_#ff0000]"></div>
+                    )}
+                  </a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+  )
 }
-
-const NavItem: React.FC<NavItemProps> = ({
-	label,
-	japaneseLabel,
-	href,
-	isActive,
-}) => {
-	const [isHovered, setIsHovered] = useState(false);
-	const [glitchEffect, setGlitchEffect] = useState(false);
-	const [japaneseChars, setJapaneseChars] = useState<string[]>([]);
-	const originalText = useRef<string>(japaneseLabel);
-
-	// Japanese character pool for glitch effect
-	const japaneseCharPool =
-		"アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン";
-
-	useEffect(() => {
-		setJapaneseChars(originalText.current.split(""));
-	}, [japaneseLabel]);
-
-	// Handle hover states with glitch effect
-	const handleMouseEnter = () => {
-		setGlitchEffect(true);
-
-		setTimeout(() => {
-			setIsHovered(true);
-			setGlitchEffect(false);
-		}, 200);
-	};
-
-	const handleMouseLeave = () => {
-		setGlitchEffect(true);
-
-		setTimeout(() => {
-			setIsHovered(false);
-			setGlitchEffect(false);
-		}, 200);
-	};
-
-	// Generate glitching characters
-	useEffect(() => {
-		let interval: NodeJS.Timeout | null = null;
-
-		if (glitchEffect) {
-			// Create a local copy of characters to mutate without triggering re-renders
-			const origChars = originalText.current.split("");
-
-			interval = setInterval(() => {
-				const newChars = [...origChars];
-
-				// Randomly replace characters
-				for (let i = 0; i < Math.ceil(origChars.length / 3); i++) {
-					const randomIndex = Math.floor(Math.random() * origChars.length);
-					newChars[randomIndex] = japaneseCharPool.charAt(
-						Math.floor(Math.random() * japaneseCharPool.length),
-					);
-				}
-
-				setJapaneseChars(newChars);
-			}, 50);
-		}
-
-		return () => {
-			if (interval) {
-				clearInterval(interval);
-			}
-
-			// Reset to original after glitch effect
-			if (!isHovered && !glitchEffect) {
-				setJapaneseChars(originalText.current.split(""));
-			}
-		};
-	}, [glitchEffect, isHovered]);
-
-	return (
-		<li className="relative">
-			<Link href={href}>
-				<a
-					className={`block font-cyber text-lg uppercase tracking-wide px-3 py-2 relative overflow-hidden ${isActive ? "text-cyberred" : "text-white"}`}
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
-				>
-					<AnimatePresence initial={false} mode="wait">
-						{isHovered ? (
-							<motion.div
-								key="japanese"
-								className="flex justify-center items-center space-x-1 font-jp"
-								initial={{ y: 10, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								exit={{ y: -10, opacity: 0 }}
-								transition={{ duration: 0.2 }}
-							>
-								{japaneseChars.map((char, idx) => (
-									<motion.span
-										key={`${idx}-${char}`}
-										initial={{ y: 0 }}
-										animate={{
-											y: glitchEffect ? [0, -2, 1, 0] : 0,
-											opacity: glitchEffect ? [1, 0.7, 1] : 1,
-											color: glitchEffect
-												? ["#ffffff", "#FF2D55", "#00F0FF", "#ffffff"]
-												: isActive
-													? "#FF2D55"
-													: "#ffffff",
-										}}
-										transition={{ duration: 0.2 }}
-									>
-										{char}
-									</motion.span>
-								))}
-							</motion.div>
-						) : (
-							<motion.div
-								key="english"
-								className="flex justify-center items-center"
-								initial={{ y: -10, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								exit={{ y: 10, opacity: 0 }}
-								transition={{ duration: 0.2 }}
-							>
-								{label}
-							</motion.div>
-						)}
-					</AnimatePresence>
-
-					{/* Active indicator */}
-					{isActive && (
-						<motion.div
-							className="absolute bottom-0 left-0 w-full h-[2px] bg-cyberred"
-							initial={{ scaleX: 0 }}
-							animate={{ scaleX: 1 }}
-							layoutId="activeNavIndicator"
-							transition={{ type: "spring", stiffness: 400, damping: 30 }}
-						/>
-					)}
-
-					{/* Hover scan effect */}
-					<motion.div
-						className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-cyberred/10 to-transparent"
-						initial={{ opacity: 0, x: "-100%" }}
-						animate={{
-							opacity: isHovered ? [0, 0.7, 0] : 0,
-							x: isHovered ? ["-100%", "100%"] : "-100%",
-						}}
-						transition={{ duration: 0.5 }}
-					/>
-				</a>
-			</Link>
-		</li>
-	);
-};
-
-const LogoText: React.FC = () => {
-	const [isHovered, setIsHovered] = useState(false);
-	const [isGlitching, setIsGlitching] = useState(false);
-
-	const handleMouseEnter = () => {
-		setIsGlitching(true);
-		setTimeout(() => setIsHovered(true), 300);
-	};
-
-	const handleMouseLeave = () => {
-		setIsHovered(false);
-		setIsGlitching(false);
-	};
-
-	return (
-		<motion.div
-			className="relative cursor-pointer"
-			whileHover={{ scale: 1.05 }}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-		>
-			<h1 className="text-3xl md:text-4xl font-bold font-cyber tracking-wider relative">
-				<span className="inline-block">
-					<span className="relative z-10">
-						<img
-							src="/assets/logo white on black.png"
-							alt="logo"
-							width={100}
-							height={100}
-							className="w-20 h-auto"
-						/>
-					</span>
-
-					{/* Hover glow effect */}
-					<motion.span
-						className="absolute top-0 left-0 w-full h-full bg-cyberred opacity-20 blur-md -z-10"
-						animate={{
-							opacity: isHovered ? [0.2, 0.4, 0.2] : 0.2,
-							scale: isHovered ? [1, 1.1, 1] : 1,
-						}}
-						transition={{ duration: 1.5, repeat: isHovered ? Infinity : 0 }}
-					/>
-				</span>
-			</h1>
-
-			{/* Japanese text overlay - only shows during hover */}
-			{/* {isHovered && (
-				<motion.div
-					className="absolute -top-5 left-0 w-full font-jp text-sm text-cyberred opacity-70"
-					initial={{ opacity: 0, y: 10 }}
-					animate={{ opacity: 0.7, y: 0 }}
-					exit={{ opacity: 0, y: 10 }}
-				>
-					サイバーノマド
-				</motion.div>
-			)} */}
-
-			{/* Glitch effect */}
-			<motion.div
-				className="absolute inset-0 bg-cyberred/5 mix-blend-screen z-20 pointer-events-none"
-				initial={{ opacity: 0 }}
-				animate={{
-					opacity: isGlitching ? [0, 0.8, 0] : 0,
-					x: isGlitching ? [-5, 5, 0] : 0,
-					y: isGlitching ? [3, -3, 0] : 0,
-				}}
-				transition={{ duration: 0.3 }}
-			/>
-		</motion.div>
-	);
-};
-
-const Header: React.FC = () => {
-	const [location] = useLocation();
-	const { scrollY } = useScroll();
-
-	// Transform scrollY to opacity and y position values
-	const headerOpacity = useTransform(scrollY, [0, 100], [0, 1]);
-	const headerY = useTransform(scrollY, [0, 100], [-100, 0]);
-
-	return (
-		<motion.header
-			className="fixed top-0 left-0 right-0 py-6 px-4 md:px-8 lg:px-16 border-b border-cybergray z-50 bg-cyberdark/90 backdrop-blur-sm"
-			style={{
-				opacity: headerOpacity,
-				y: headerY,
-			}}
-			transition={{ duration: 0.3 }}
-		>
-			<div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-				<div className="flex items-center mb-4 md:mb-0">
-					<LogoText />
-					{/* <span className="text-xs text-cyberblue ml-2 font-code">v0.9.2</span> */}
-				</div>
-
-				<nav className="w-full md:w-auto">
-					<ul className="flex flex-wrap justify-center md:justify-end gap-4 lg:gap-8">
-						{navItems.map((item, index) => (
-							<motion.div
-								key={item.label}
-								initial={{ y: -20, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								transition={{ delay: 0.1 * index, duration: 0.5 }}
-							>
-								<NavItem {...item} isActive={location === item.href} />
-							</motion.div>
-						))}
-					</ul>
-				</nav>
-			</div>
-
-			{/* Header scan line effect */}
-			<motion.div
-				className="absolute bottom-0 left-0 w-full h-[1px] bg-cyberred/20"
-				initial={{ scaleX: 0 }}
-				animate={{ scaleX: 1 }}
-				transition={{ duration: 1.5, delay: 0.8 }}
-			/>
-		</motion.header>
-	);
-};
-
-export default Header;

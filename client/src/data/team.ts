@@ -9,25 +9,25 @@ export interface TeamMember {
 export const teamMembers: TeamMember[] = [
   {
     id: "team-1",
-    name: "Puppeteer",
+    name: "Morphic",
     number: "4861",
     role: "Lead Developer",
-    imageUrl: "/assets/image 1.png"
+    imageUrl: "/assets/morphic logo.svg"
   },
   {
     id: "team-2",
-    name: "Tech Maniac",
-    number: "0000",
+    name: "Puppeter",
+    number: "4861",
     role: "Creative Director",
-    imageUrl: "/assets/image 2.png"
+    imageUrl: "/assets/logo white on black.png"
   },
-  {
-    id: "team-3",
-    name: "Marketing Lord",
-    number: "3361",
-    role: "Brand Manager",
-    imageUrl: "/assets/image 3.png"
-  },
+  // {
+  //   id: "team-3",
+  //   name: "Marketing Lord",
+  //   number: "3361",
+  //   role: "Brand Manager",
+  //   imageUrl: "/assets/image 3.png"
+  // },
 //   {
 //     id: "team-4",
 //     name: "Pixel Wizard",

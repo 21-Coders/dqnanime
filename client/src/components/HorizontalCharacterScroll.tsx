@@ -105,14 +105,14 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       className="relative min-h-[250vh] mb-38 pt-4" 
     >
       {/* Header section - will be sticky */}
-      <div className={`${isSticky ? 'fixed top-24 left-0 right-0 z-30' : 'relative'}`}>
-        <h2 className="text-4xl md:text-6xl font-cyber font-bold text-center mb-4">
+      <div className={`${isSticky ? 'fixed top-5 left-0 right-0 z-30' : 'relative'}`}>
+        <h2 className="text-4xl md:text-6xl font-cyber font-bold text-center mb-0">
           <span className="text-cyberred">CAST</span> OF CHARACTERS
         </h2>
         
         {/* Current character details display */}
         <motion.div 
-          className="w-full max-w-3xl mx-auto px-4 relative z-10 py-4"
+          className="w-full max-w-3xl mx-auto px-4 relative z-10 py-0"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -149,7 +149,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
               >
-                {characters[activeIndex].description}
+
               </motion.div>
             </div>
           )}
@@ -162,7 +162,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       {/* Horizontal scrolling container */}
       <div 
         ref={containerRef}
-        className={`overflow-x-auto scrollbar-hide pb-8 ${isSticky ? 'fixed top-[380px] left-0 right-0' : 'relative mt-16'}`}
+        className={`overflow-x-auto scrollbar-hide pb-8 ${isSticky ? 'fixed top-[240px] left-0 right-0' : 'relative mt-16'}`}
         onScroll={handleManualScroll}
         style={{
           scrollBehavior: manualScroll ? 'auto' : 'smooth',
@@ -181,13 +181,13 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                 key={character.id}
                 className={`flex-shrink-0 rounded-md overflow-hidden cursor-pointer bg-cyberdark2 border-2 ${isActive ? 'border-cyberred' : 'border-cybergray'}`}
                 style={{
-                  width: isActive ? 432 : 100,
+                  width: isActive ? 400 : 120,
                   scrollSnapAlign: 'start'
                 }}
                 animate={{ 
-                  width: isActive ? 432 : 100,
-                  boxShadow: isActive 
-                    ? '0 0 25px 5px rgba(255, 45, 85, 0.3)' 
+                  width: isActive ? 400 : 120,
+                  boxShadow: isActive
+                    ? '0 0 35px 10px rgba(255, 45, 85, 0.5)'
                     : '0 0 0px 0px rgba(255, 45, 85, 0)'
                 }}
                 transition={{ 
@@ -198,14 +198,107 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                 onMouseEnter={() => handleCardHover(index)}
               >
                 <div className="w-[432px]">
-                  <div className="relative h-[500px] overflow-hidden">
-                    <img 
-                      src={character.imageUrl} 
-                      alt={character.name} 
-                      className="w-full h-full object-cover"
+                  <div className="relative h-[420px] overflow-hidden bg-black">
+                    {/* Red glow background effect */}
+                    <motion.div
+                      className="absolute inset-0"
+                      animate={{
+                        boxShadow: isActive
+                          ? 'inset 0 0 40px 10px rgba(255, 0, 0, 0.5)'
+                          : 'inset 0 0 20px 5px rgba(255, 0, 0, 0.3)',
+                        backgroundColor: isActive ? 'rgba(20, 0, 0, 0.6)' : 'rgba(0, 0, 0, 0)'
+                      }}
+                      transition={{ duration: 0.5 }}
                     />
                     
-                    <div className="absolute inset-0 bg-gradient-to-t from-cyberdark via-transparent to-transparent opacity-60" />
+                    {/* Glitchy question marks for active cards */}
+                    {isActive && (
+                      <div className="absolute left-0 top-0 bottom-0 w-[280px] flex items-center justify-center overflow-hidden">
+                        <motion.div
+                          className="text-cyberred font-cyber text-[150px] opacity-30 select-none"
+                          animate={{
+                            opacity: [0.2, 0.4, 0.2],
+                            x: [0, 5, 0, -5, 0],
+                            filter: [
+                              'blur(0px) brightness(1)',
+                              'blur(2px) brightness(1.5)',
+                              'blur(0px) brightness(1)'
+                            ]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            repeatType: "loop"
+                          }}
+                        >
+                          ?
+                        </motion.div>
+                        <motion.div
+                          className="absolute text-cyberred font-cyber text-[100px] opacity-20 select-none"
+                          style={{ left: '30px', top: '50px' }}
+                          animate={{
+                            opacity: [0.1, 0.3, 0.1],
+                            y: [0, -5, 0, 5, 0],
+                            filter: [
+                              'blur(0px) brightness(1)',
+                              'blur(3px) brightness(1.3)',
+                              'blur(0px) brightness(1)'
+                            ]
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            delay: 0.5,
+                            repeat: Infinity,
+                            repeatType: "loop"
+                          }}
+                        >
+                          ?
+                        </motion.div>
+                      </div>
+                    )}
+                    
+                    {/* Two separate images for active and inactive states */}
+                    {isActive ? (
+                      // Image for active state - positioned to the right
+                      <img
+                        src={character.imageUrl}
+                        alt={character.name}
+                        className="h-full object-contain"
+                        style={{
+                          position: 'absolute',
+                          right: 'auto',
+                          left: '72%',
+                          top: '50%',
+                        transform: isActive
+                          ? 'translate(-50%, -50%)'
+                          : 'translate(-10%, -10%)',
+                          maxHeight: '100%',
+                          maxWidth: '200px',
+                          opacity: 1,
+                          zIndex: 15
+                        }}
+                      />
+                    ) : (
+                      // Image for inactive state - original size without zooming
+                      <img
+                        src={character.imageUrl}
+                        alt={character.name}
+                        style={{
+                          position: 'absolute',
+                          left: '10%',
+                          top: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          height: '90%',
+                          width: 'auto',
+                          objectFit: 'contain',
+                          opacity: 1,
+                          zIndex: 15,
+                          filter: 'brightness(1.2) contrast(1.1)'
+                        }}
+                      />
+                    )}
+                    
+                    <div className={`absolute inset-0 bg-gradient-to-t from-cyberdark via-transparent to-transparent ${isActive ? 'opacity-60' : 'opacity-40'}`} />
                     
                     {/* <motion.div 
                       className="absolute inset-0 bg-gradient-to-b from-transparent via-cyberred/10 to-transparent mix-blend-overlay opacity-0"
@@ -222,7 +315,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                     /> */}
                     
                     {isActive && (
-                      <motion.div 
+                      <motion.div
                         className="absolute top-0 left-0 w-full h-6 bg-cyberred/20"
                         initial={{ y: -10 }}
                         animate={{ y: 500 }}
@@ -235,7 +328,22 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                       />
                     )}
                     
-                    <div className="absolute bottom-0 left-0 w-full p-4">
+                    {/* Additional red glow scan effect */}
+                    {isActive && (
+                      <motion.div
+                        className="absolute top-0 right-0 w-[100px] h-full bg-gradient-to-r from-transparent to-cyberred/20"
+                        animate={{
+                          opacity: [0.2, 0.5, 0.2],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatType: "loop"
+                        }}
+                      />
+                    )}
+                    
+                    <div className="absolute bottom-0 left-0 w-full p-4 z-30">
                       <motion.div 
                         animate={{ opacity: isActive ? 1 : 0.6 }}
                         transition={{ duration: 0.3 }}
@@ -257,10 +365,10 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                       </motion.div>
                     </div>
                     
-                    <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-cyberred" />
-                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-cyberred" />
-                    <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-cyberred" />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-cyberred" />
+                    <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-cyberred z-40" />
+                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-cyberred z-40" />
+                    <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-cyberred z-40" />
+                    <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-cyberred z-40" />
                   </div>
                 </div>
               </motion.div>
@@ -291,7 +399,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       </div> */}
       
       {/* Scroll indicator that appears when horizontal scroll is complete */}
-      {/* {hasCompletedScroll && (
+      {hasCompletedScroll && (
         <motion.div 
           className={`${isSticky ? 'fixed' : 'absolute'} bottom-16 left-0 w-full text-center z-30`}
           initial={{ opacity: 0, y: 10 }}
@@ -310,7 +418,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
             </div>
           </div>
         </motion.div>
-      )} */}
+      )}
     </div>
   );
 };

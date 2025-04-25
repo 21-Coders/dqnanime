@@ -8,7 +8,7 @@ interface LoadingScreenProps {
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ 
   onLoadingComplete, 
-  duration = 3000 
+  duration = 100000 
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -29,6 +29,32 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
     'SECURITY PROTOCOL OVERRIDE'
   ];
   
+  // Terminal text for corner displays
+  const [terminalLines, setTerminalLines] = useState([
+    "FORCE: XX0022. ENCYPT://000.222.2345",
+    "TRYPASS: ********* AUTH CODE: ALPHA GAMMA: 1___ PRIORITY 1",
+    "RETRY: REINDEER FLOTILLA",
+    "Z:> /FALKEN/GAMES/TICTACTOE/ EXECUTE -PLAYERS 0",
+    "================================================",
+    "Priority 1 // local / scanning...",
+    "scanning ports...",
+    "BACKDOOR FOUND (23.45.23.12.00000000)",
+    "BACKDOOR FOUND (13.66.23.12.00110000)",
+    "BACKDOOR FOUND (13.66.23.12.00110044)",
+    "...",
+    "...",
+    "BRUTE.EXE -r -z",
+    "...locating vulnerabilities...",
+    "...vulnerabilities found...",
+    "MCP/> DEPLOY CLU",
+    "SCAN: __ 0100.0000.0554.0080",
+    "SCAN: __ 0020.0000.0553.0080",
+    "SCAN: __ 0001.0000.0554.0550",
+    "SCAN: __ 0012.0000.0553.0030",
+    "SCAN: __ 0100.0000.0554.0080",
+    "SCAN: __ 0020.0000.0553.0080",
+  ]);
+  
   // Generate random glitch text
   useEffect(() => {
     if (!isLoading) return;
@@ -47,6 +73,24 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
         setGlitchText(errorMessages[Math.floor(Math.random() * errorMessages.length)]);
       }
     }, 150);
+    
+    return () => clearInterval(interval);
+  }, [isLoading]);
+  
+  // Terminal text update effect
+  useEffect(() => {
+    if (!isLoading) return;
+    
+    const updateTerminal = () => {
+      setTerminalLines(prevLines => {
+        const newLines = [...prevLines];
+        // Move first line to the end (rotation)
+        newLines.push(newLines.shift() as string);
+        return newLines;
+      });
+    };
+    
+    const interval = setInterval(updateTerminal, 200);
     
     return () => clearInterval(interval);
   }, [isLoading]);
@@ -181,7 +225,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
               }}
             >
               <h1 className="text-6xl font-cyber font-bold">
-                <img src="/assets/logo white on black.png" alt='logo' width={300} height={300} className=''/>
+                <img src="/assets/dqnlogo.svg" alt='logo' width={300} height={300} className=''/>
               </h1>
               <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-cyberred"></div>
               <div className="absolute -bottom-4 left-1/4 w-1/2 h-[1px] bg-cyberred/50"></div>
@@ -305,6 +349,92 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
               }}
             />
           ))}
+          
+          {/* Glitchy terminal in bottom left corner */}
+          <motion.div
+            className="absolute bottom-8 left-8 w-72 overflow-hidden"
+            animate={{
+              x: [0, -2, 1, -1, 0],
+              opacity: [1, 0.95, 1]
+            }}
+            transition={{
+              duration: 0.5,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          >
+            <motion.div
+              className="absolute -left-2 -top-2 w-[calc(100%+4px)] h-[calc(100%+4px)] bg-cyberred/5 z-0"
+              animate={{
+                opacity: [0.1, 0.3, 0.1],
+                x: [0, 2, 0, -2, 0],
+                y: [0, -1, 0, 1, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "mirror"
+              }}
+            />
+            
+            <div className="font-code text-cyberred text-[9px] leading-tight z-10 relative">
+              {terminalLines.map((line, index) => (
+                <motion.div
+                  key={`term-${index}`}
+                  initial={{ opacity: 0.7 }}
+                  animate={{
+                    opacity: [0.7, 1, 0.7],
+                    x: index % 3 === 0 ? [0, 1, 0, -1, 0] : [0],
+                    filter: index % 5 === 0 ?
+                      ['blur(0px) brightness(1)', 'blur(0.5px) brightness(1.5)', 'blur(0px) brightness(1)'] :
+                      ['blur(0px) brightness(1)']
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: index * 0.05
+                  }}
+                  className="whitespace-nowrap"
+                >
+                  <span className="text-cyberred/70 mr-1">{'>>'}</span>
+                  {line}
+                  
+                  {/* Random glitch effect on some lines */}
+                  {index % 4 === 0 && (
+                    <motion.span
+                      className="absolute left-0 right-0 bg-cyberred/20 h-full"
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      animate={{
+                        scaleX: [0, 1, 0],
+                        opacity: [0, 0.7, 0],
+                        x: [0, 5, 0]
+                      }}
+                      transition={{
+                        duration: 0.2,
+                        repeat: Infinity,
+                        repeatDelay: Math.random() * 5 + 3
+                      }}
+                    />
+                  )}
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Scan line effect */}
+            <motion.div
+              className="absolute top-0 left-0 w-full h-[1px] bg-cyberred/30"
+              animate={{
+                y: [0, 150, 0],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
