@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
-import { Character } from '@/data/characters';
+import type { Character } from '@/data/characters';
 
 interface HorizontalCharacterScrollProps {
   characters: Character[];
@@ -105,20 +105,20 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       className="relative min-h-[250vh] mb-38 pt-4" 
     >
       {/* Header section - will be sticky */}
-      <div className={`${isSticky ? 'fixed top-32 left-0 right-0 z-30' : 'relative'}`}>
+      <div className={`${isSticky ? 'fixed top-24 left-0 right-0 z-30' : 'relative'}`}>
         <h2 className="text-4xl md:text-6xl font-cyber font-bold text-center mb-4">
           <span className="text-cyberred">CAST</span> OF CHARACTERS
         </h2>
         
         {/* Current character details display */}
         <motion.div 
-          className="w-full max-w-3xl mx-auto px-4 relative z-10"
+          className="w-full max-w-3xl mx-auto px-4 relative z-10 py-4"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           {characters[activeIndex] && (
-            <div className="flex flex-col items-center text-center mb-12">
+            <div className="flex flex-col items-center text-center ">
               <motion.h3 
                 className="text-3xl font-cyber text-white mb-2"
                 key={`title-${activeIndex}`}
@@ -157,12 +157,12 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       </div>
       
       {/* Spacer for the header when it becomes sticky */}
-      {isSticky && <div className="h-[250px]"></div>}
+      {isSticky && <div className="h-[380px]" />}
       
       {/* Horizontal scrolling container */}
       <div 
         ref={containerRef}
-        className={`overflow-x-auto scrollbar-hide pb-8 ${isSticky ? 'fixed top-[420px] left-0 right-0' : 'relative mt-16'}`}
+        className={`overflow-x-auto scrollbar-hide pb-8 ${isSticky ? 'fixed top-[380px] left-0 right-0' : 'relative mt-16'}`}
         onScroll={handleManualScroll}
         style={{
           scrollBehavior: manualScroll ? 'auto' : 'smooth',
@@ -205,9 +205,9 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                       className="w-full h-full object-cover"
                     />
                     
-                    <div className="absolute inset-0 bg-gradient-to-t from-cyberdark via-transparent to-transparent opacity-60"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-cyberdark via-transparent to-transparent opacity-60" />
                     
-                    <motion.div 
+                    {/* <motion.div 
                       className="absolute inset-0 bg-gradient-to-b from-transparent via-cyberred/10 to-transparent mix-blend-overlay opacity-0"
                       animate={{
                         opacity: isActive ? [0, 0.7, 0] : 0,
@@ -219,7 +219,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                         ease: "linear",
                         repeatType: "loop"
                       }}
-                    />
+                    /> */}
                     
                     {isActive && (
                       <motion.div 
@@ -228,7 +228,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                         animate={{ y: 500 }}
                         transition={{
                           duration: 2,
-                          repeat: Infinity,
+                          repeat: Number.POSITIVE_INFINITY,
                           ease: "linear",
                           repeatType: "loop"
                         }}
@@ -257,10 +257,10 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
                       </motion.div>
                     </div>
                     
-                    <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-cyberred"></div>
-                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-cyberred"></div>
-                    <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-cyberred"></div>
-                    <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-cyberred"></div>
+                    <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-cyberred" />
+                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-cyberred" />
+                    <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-cyberred" />
+                    <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-cyberred" />
                   </div>
                 </div>
               </motion.div>
@@ -270,7 +270,7 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       </div>
       
       {/* Spacer div to maintain scroll height when container becomes fixed */}
-      {isSticky && <div style={{ height: '70vh' }}></div>}
+      {isSticky && <div style={{ height: '72vh' }} />}
       
       {/* Progress indicator */}
       {/* <div className={`${isSticky ? 'fixed bottom-4' : 'absolute bottom-0'} left-0 w-full px-4 py-2 z-30`}>

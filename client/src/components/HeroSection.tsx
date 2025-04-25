@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const HeroSection: React.FC = () => {
@@ -13,7 +13,7 @@ const HeroSection: React.FC = () => {
       videoRef.current.addEventListener('loadeddata', () => {
         setIsVideoLoaded(true);
 
-        // Try to play with sound immediately (will likely be blocked by browser)
+         // Try to play with sound immediately (will likely be blocked by browser)
         const playPromise = videoRef.current?.play();
 
         if (playPromise !== undefined) {
@@ -120,39 +120,6 @@ const HeroSection: React.FC = () => {
             <source src="/assets/dqnteaser.mp4" type="video/mp4" />
           </video>
         </div>
-
-        {/* <div className="absolute inset-0 w-full h-full overflow-hidden z-20 pointer-events-none">
-          <video
-            className="absolute inset-0 w-full h-full object-cover px-8 py-8 opacity-50"
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{
-              mixBlendMode: 'screen',
-              opacity: 0.4
-            }}
-          >
-            <source src="/assets/fogeffect.mp4" type="video/mp4" />
-          </video>
-        </div> */}
-
-        {/* <div className="absolute inset-0 w-full h-full overflow-hidden z-21 pointer-events-none">
-          <video
-            className="absolute inset-0 w-full h-full object-cover px-8 py-8 opacity-50"
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{
-              mixBlendMode: 'screen',
-              opacity: 0.8,
-              transform: 'scaleX(-1)' // Horizontal flip
-            }}
-          >
-            <source src="/assets/fogeffectred.mp4" type="video/mp4" />
-          </video>
-        </div> */}
 
         {/* Sound toggle button */}
         <div className="absolute bottom-10 right-10 z-50 pointer-events-auto">
@@ -281,30 +248,6 @@ const HeroSection: React.FC = () => {
                 <img src={"https://www.dqn.red/_next/static/media/logo-red.9c7c3ea1.svg"} alt="Logo" className="inline-block w-full h-full mr-36 md:mr-0" />
               </div> */}
             </motion.div>
-
-            {/* <motion.div
-              className="font-jp text-xl text-cyberred opacity-80 mb-2"
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            >
-              サイバーパンク・ワールド
-            </motion.div>
-
-            <motion.div
-              className="w-40 h-1 bg-cyberred mx-auto mb-6"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1, delay: 2 }}
-            /> */}
-            {/* 
-            <motion.div
-              className="text-sm md:text-base font-code text-gray-400 max-w-md mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 0.8, y: 0 }}
-              transition={{ duration: 1, delay: 2.2 }}
-            >
-              LOADING SECTOR SCAN... COMPLETE
-            </motion.div> */}
           </div>
         </motion.div>
 

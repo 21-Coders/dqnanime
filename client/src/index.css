@@ -83,6 +83,51 @@
   .border-cybergray {
     border-color: #333333;
   }
+  
+  .filter-red {
+    filter: sepia(0.5) hue-rotate(300deg) saturate(3);
+  }
+  
+  .geometric-frame {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .triangle-particle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    opacity: 0.7;
+    filter: blur(1px);
+    box-shadow: 0 0 12px #FF0000, 0 0 18px #FF0000;
+  }
+  
+  .neon-glow {
+    filter: drop-shadow(0 0 8px #FF0000) drop-shadow(0 0 15px #FF0000);
+  }
+  
+  .neon-line {
+    position: relative;
+    background-color: #FF0000;
+    box-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+  }
+  
+  .deep-red {
+    color: #FF0000;
+    border-color: #FF0000;
+    background-color: #FF0000;
+  }
+  
+  .red-border {
+    border-color: #FF0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+  
+  .perspective-container {
+    perspective: 1000px;
+  }
 }
 
 /* Font Families */
@@ -121,17 +166,33 @@
   .animate-matrix {
     animation: matrix 20s linear infinite;
   }
+  
+  .animate-triangle-pulse {
+    animation: triangle-pulse 3s infinite alternate;
+  }
+  
+  .animate-triangle-rotate {
+    animation: triangle-rotate 8s linear infinite;
+  }
+  
+  .animate-float-triangle {
+    animation: float-triangle 4s ease-in-out infinite;
+  }
+  
+  .animate-3d-rotate {
+    animation: rotate-3d 10s linear infinite;
+  }
 }
 
 /* Custom Keyframes */
 @keyframes pulse-glow {
   0%, 100% { 
-    box-shadow: 0 0 15px 2px rgba(255, 45, 85, 0.6);
+    box-shadow: 0 0 15px 2px rgba(255, 0, 0, 0.6);
     filter: brightness(1);
   }
   50% { 
-    box-shadow: 0 0 25px 8px rgba(255, 45, 85, 0.8);
-    filter: brightness(1.2);
+    box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.8);
+    filter: brightness(1.3);
   }
 }
 
@@ -160,6 +221,41 @@
 @keyframes matrix {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
+}
+
+@keyframes triangle-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 10px #FF0000) drop-shadow(0 0 15px #FF0000);
+    transform: translateZ(0px);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 15px #FF0000) drop-shadow(0 0 25px #FF0000);
+    transform: translateZ(20px);
+  }
+}
+
+@keyframes triangle-rotate {
+  0% { transform: rotate3d(0, 1, 0, 0deg); }
+  100% { transform: rotate3d(0, 1, 0, 360deg); }
+}
+
+@keyframes rotate-3d {
+  0% { transform: rotate3d(1, 1, 1, 0deg); }
+  100% { transform: rotate3d(1, 1, 1, 360deg); }
+}
+
+@keyframes float-triangle {
+  0% { 
+    transform: translateY(0px) translateX(0px) translateZ(0px); 
+  }
+  50% { 
+    transform: translateY(calc(var(--float-y) * 1px)) translateX(calc(var(--float-x) * 1px)) translateZ(calc(var(--float-z) * 1px)); 
+  }
+  100% { 
+    transform: translateY(0px) translateX(0px) translateZ(0px); 
+  }
 }
 
 /* Navigation glitch effect */

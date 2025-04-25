@@ -1,6 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import CyberButton from './CyberButton';
+import { HyperText } from "../components/ui/hypertext";
 
 const WorldSection: React.FC = () => {
   const statsData = [
@@ -21,9 +21,9 @@ const WorldSection: React.FC = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-cyber font-bold inline-block">
-            <span className="text-cyberred">NEO</span>-TOKYO 2099
+            <span className="text-cyberred">ABOUT </span>US
           </h2>
-          <div className="absolute -bottom-4 left-0 w-24 h-1 bg-cyberred"></div>
+          <div className="absolute -bottom-4 left-0 w-32 h-1 bg-cyberred" />
         </motion.div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -37,20 +37,20 @@ const WorldSection: React.FC = () => {
           >
             <div className="aspect-video bg-cyberdark overflow-hidden border border-cybergray">
               <img 
-                src="https://images.unsplash.com/photo-1555680202-c86f0e12f086?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1350&q=80" 
+                src="/assets/logo white on black.png" 
                 alt="Neo-Tokyo cityscape" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-cyberdark via-cyberdark/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-cyberdark via-cyberdark/20 to-transparent" />
             </div>
             
             <div className="absolute bottom-8 left-8">
               <h3 className="text-xl md:text-2xl font-cyber font-bold text-white mb-2">
-                NEON DISTRICT
+                CODE 4861
               </h3>
               <div className="flex items-center text-cyberred font-code text-sm">
                 <span className="font-jp mr-2">ネオン地区</span>
-                <div className="w-4 h-[1px] bg-cyberred"></div>
+                <div className="w-4 h-[1px] bg-cyberred" />
               </div>
             </div>
 
@@ -100,9 +100,7 @@ const WorldSection: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <CyberButton japaneseText="詳細を読む">
-                EXPLORE WORLD
-              </CyberButton>
+              <HyperText className='w-40 text-center'>EXPLORE WORLD</HyperText>
             </motion.div>
           </motion.div>
         </div>

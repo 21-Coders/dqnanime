@@ -7,10 +7,12 @@ import Footer from "@/components/Footer";
 import ScanLine from "@/components/ScanLine";
 import MatrixBackground from "@/components/MatrixBackground";
 import HorizontalCharacterScroll from "@/components/HorizontalCharacterScroll";
+import TeamSection from "@/components/Team";
 import LoadingScreen from "@/components/LoadingScreen";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { characters } from "@/data/characters";
-import CyberButton from "@/components/CyberButton";
+import { teamMembers } from "@/data/team";
+// import CyberButton from "@/components/CyberButton";
 
 export default function Home() {
   const mainContainerRef = useRef<HTMLDivElement>(null);
@@ -36,14 +38,14 @@ export default function Home() {
       
       <motion.div 
         ref={mainContainerRef}
-        className="bg-cyberdark text-white min-h-screen relative overflow-hidden"
+        className="bg-black text-white min-h-screen relative overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         {/* Global effects */}
         <ScanLine />
-        <div className="noise"></div>
+        <div className="noise" />
         
         {/* Animated background elements with parallax */}
         <motion.div
@@ -64,10 +66,15 @@ export default function Home() {
         {/* Main content */}
         <Header />
         <HeroSection />
+        <div className="pb-20">
         <HorizontalCharacterScroll characters={characters} />
+        </div>
+        <div className="pt-20">
         <WorldSection />
-        <NewsletterSection />
+        </div>
+        <TeamSection members={teamMembers} />
         <Footer />
+        <NewsletterSection />
       </motion.div>
     </>
   );

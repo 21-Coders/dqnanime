@@ -17,7 +17,7 @@ const CyberSocialIcon: React.FC<{ icon: string; href: string; label: string }> =
       transition={{ type: "spring", stiffness: 400, damping: 10 }}
     >
       <div className="w-16 h-16 flex items-center justify-center bg-cyberdark2 rounded-sm border border-cybergray overflow-hidden mb-2">
-        <i className={`text-2xl ${icon} ${isHovered ? 'text-cyberred' : 'text-gray-400'}`}></i>
+        <i className={`text-2xl ${icon} ${isHovered ? 'text-cyberred' : 'text-gray-400'}`} />
 
         {/* Scan effect on hover */}
         <AnimatePresence>
@@ -103,12 +103,12 @@ const socialIcons = [
 // Main footer
 const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-cyberdark py-12 px-4 md:px-8 overflow-hidden border-t border-cybergray">
+    <footer className="relative bg-black py-12 px-4 md:px-8 overflow-hidden border-t border-cybergray">
       {/* Top line glow */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-cyberred/30"></div>
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-cyberred/30" />
 
       {/* Digital pattern overlay */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none noise-overlay"></div>
+      <div className="absolute inset-0 opacity-5 pointer-events-none noise-overlay" />
 
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center">
@@ -173,7 +173,7 @@ const Footer: React.FC = () => {
           </motion.div>
 
           {/* Moving scan line at the bottom */}
-          <motion.div
+          {/* <motion.div
             className="absolute bottom-0 left-0 w-full h-[2px]"
             style={{
               background: 'linear-gradient(90deg, transparent 0%, rgba(255, 45, 85, 0.5) 50%, transparent 100%)'
@@ -186,7 +186,7 @@ const Footer: React.FC = () => {
               repeat: Infinity,
               ease: "linear"
             }}
-          />
+          /> */}
         </div>
       </div>
     </footer>

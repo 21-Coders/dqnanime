@@ -181,7 +181,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
               }}
             >
               <h1 className="text-6xl font-cyber font-bold">
-                <span className="text-cyberred">CYBER</span>NOMAD
+                <img src="/assets/logo white on black.png" alt='logo' width={300} height={300} className=''/>
               </h1>
               <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-cyberred"></div>
               <div className="absolute -bottom-4 left-1/4 w-1/2 h-[1px] bg-cyberred/50"></div>

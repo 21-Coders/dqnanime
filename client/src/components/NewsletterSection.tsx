@@ -18,7 +18,7 @@ const NewsletterSection: React.FC = () => {
 
   return (
     <section className="py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-cyberdark opacity-50 z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
       <motion.div 
         className="container mx-auto relative z-10"
         initial={{ opacity: 0, y: 50 }}
@@ -69,6 +69,20 @@ const NewsletterSection: React.FC = () => {
           </form>
         </div>
       </motion.div>
+      <motion.div
+            className="absolute bottom-0 left-0 w-full h-[2px]"
+            style={{
+              background: 'linear-gradient(90deg, transparent 0%, rgba(255, 45, 85, 0.5) 50%, transparent 100%)'
+            }}
+            animate={{
+              x: ["-100%", "100%"],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
     </section>
   );
 };
