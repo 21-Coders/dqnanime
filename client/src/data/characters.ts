@@ -16,7 +16,7 @@ export const characters: Character[] = [
     title: "Android Assassin",
     level: "Combat Level: 97",
     // description: "Artificial intelligence designed for covert ops with advanced nano-enhancements and thermal optics.",
-    imageUrl: "/assets/Blood 1.webp"
+    imageUrl: "/Blood 1.webp"
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const characters: Character[] = [
     title: "Neuro Hacker",
     level: "Tech Level: 92",
     // description: "Neural interface specialist who can hack any security system through direct brain connection.",
-    imageUrl: "/assets/Blood 2.webp"
+    imageUrl: "/Blood 2.webp"
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ export const characters: Character[] = [
     title: "Street Samurai",
     level: "Strength Level: 95",
     // description: "Enhanced reflexes and blade-integrated limbs make this ex-military operative lethal in close combat.",
-    imageUrl: "/assets/Blood 3.webp"
+    imageUrl: "/Blood 3.webp"
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ export const characters: Character[] = [
     title: "Cyber Medic",
     level: "Medical Level: 98",
     // description: "Specialized in combat nanomedicine and field repairs of cybernetic implants during missions.",
-    imageUrl: "/assets/Blood 4.webp"
+    imageUrl: "/Blood 4.webp"
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ export const characters: Character[] = [
     title: "Ghost Infiltrator",
     level: "Stealth Level: 99",
     // description: "Equipped with cutting-edge optical camouflage and sound dampening tech for perfect infiltration missions.",
-    imageUrl: "/assets/Blood 5.webp"
+    imageUrl: "/Blood 5.webp"
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ export const characters: Character[] = [
     title: "Thunder Conductor",
     level: "Power Level: 94",
     // description: "Bio-engineered nervous system capable of generating and channeling massive electrical surges as weapons.",
-    imageUrl: "/assets/Blood 6.webp"
+    imageUrl: "/Blood 6.webp"
   },
   {
     id: 7,
@@ -70,6 +70,6 @@ export const characters: Character[] = [
     title: "Psycho Blaster",
     level: "Psionic Level: 96",
     // description: "Rare psychic mutation enhanced with cerebral implants allowing telekinetic assaults and mind manipulation.",
-    imageUrl: "/assets/Blood 3.webp"
+    imageUrl: "/Blood 3.webp"
   }
 ];

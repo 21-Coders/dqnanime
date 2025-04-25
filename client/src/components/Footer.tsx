@@ -198,7 +198,7 @@ const Footer: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
 
-                <img src='assets/dqnlogo.svg' alt="Logo" className="inline-block w-[100px]" />
+                <img src='/dqnlogo.svg' alt="Logo" className="inline-block w-[100px]" />
 
             </motion.div>
             

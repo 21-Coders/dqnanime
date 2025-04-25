@@ -12,14 +12,14 @@ export const teamMembers: TeamMember[] = [
     name: "Morphic",
     number: "MORPHIC",
     role: "Lead Developer",
-    imageUrl: "/assets/morphic logo.svg"
+    imageUrl: "/morphic logo.svg"
   },
   {
     id: "team-2",
     name: "Puppeter",
     number: "4861",
     role: "Creative Director",
-    imageUrl: "/assets/logo white on black.png"
+    imageUrl: "/logo white on black.png"
   },
   // {
   //   id: "team-3",

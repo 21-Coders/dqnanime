@@ -37,7 +37,7 @@ const WorldSection: React.FC = () => {
           >
             <div className="aspect-video bg-cyberdark overflow-hidden border border-cybergray">
               <img 
-                src="/assets/logo white on black.png" 
+                src="/logo white on black.png" 
                 alt="Neo-Tokyo cityscape" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />

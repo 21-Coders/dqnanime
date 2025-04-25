@@ -119,7 +119,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ members }) => {
             transition={{ duration: 1 }}
           >
             <span className="text-red-600 relative inline-block">
-              <img src="/assets/dqnlogo.svg" alt="logo" className="w-36 h-auto" />
+              <img src="/dqnlogo.svg" alt="logo" className="w-36 h-auto" />
               {glitchActive && (
                 <>
                   <span className="absolute top-0 left-0 text-cyan-500 translate-x-[2px] translate-y-[1px] opacity-70">TEAM</span>

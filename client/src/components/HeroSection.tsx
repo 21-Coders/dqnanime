@@ -117,7 +117,7 @@ const HeroSection: React.FC = () => {
             playsInline
             controls={false}
           >
-            <source src="/assets/dqnteaser.mp4" type="video/mp4" />
+            <source src="/dqnteaser.mp4" type="video/mp4" />
           </video>
         </div>
 

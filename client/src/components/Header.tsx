@@ -93,7 +93,7 @@ export default function CyberpunkHeader() {
             <div className="relative w-16 h-10 flex items-center justify-center">
               <div className="absolute inset-0 flex items-center justify-center">
                 <img
-                  src="/assets/dqnlogo.svg"
+                  src="/dqnlogo.svg"
                   alt="logo"
                   width={80}
                   height={80}
@@ -106,7 +106,7 @@ export default function CyberpunkHeader() {
                 className={`absolute inset-0 flex items-center justify-center ${glitchActive ? "opacity-100" : "opacity-0"}`}
               >
                 <img
-                  src="/assets/dqnlogo.svg"
+                  src="/dqnlogo.svg"
                   alt=""
                   width={80}
                   height={80}
@@ -114,7 +114,7 @@ export default function CyberpunkHeader() {
                   style={{ filter: "drop-shadow(0 0 2px #ff0000)" }}
                 />
                 <img
-                  src="/assets/dqnlogo.svg"
+                  src="/dqnlogo.svg"
                   alt=""
                   width={80}
                   height={80}

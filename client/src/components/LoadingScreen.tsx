@@ -427,7 +427,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
               }}
               transition={{ duration: 1.8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
             >
-              <img src="/assets/dqnlogo.svg" alt='logo' className='w-full h-auto'/>
+              <img src="/dqnlogo.svg" alt='logo' className='w-full h-auto'/>
               <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-cyberred/70"></div>
               <div className="absolute -bottom-2 left-1/4 w-1/2 h-[1px] bg-cyberred/30"></div>
             </motion.div>
