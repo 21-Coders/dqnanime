@@ -90,16 +90,18 @@ export default function Home() {
 
         {/* Main content */}
         {showHeader && <Header />}
-        <div ref={heroSectionRef}>
+        <div ref={heroSectionRef} id="hero-section">
           <HeroSection />
         </div>
-        <div ref={characterScrollRef} className="pb-20">
+        <div ref={characterScrollRef} id="characters-section" className="pb-20">
           <HorizontalCharacterScroll characters={characters} />
         </div>
-        <div ref={worldSectionRef} className="pt-20">
+        <div ref={worldSectionRef} id="world-section" className="pt-20">
           <WorldSection />
         </div>
-        <TeamSection members={teamMembers} />
+        <div id="team-section">
+          <TeamSection members={teamMembers} />
+        </div>
         <Footer />
         {/* <NewsletterSection /> */}
       </motion.div>

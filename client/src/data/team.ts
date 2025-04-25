@@ -10,7 +10,7 @@ export const teamMembers: TeamMember[] = [
   {
     id: "team-1",
     name: "Morphic",
-    number: "4861",
+    number: "MORPHIC",
     role: "Lead Developer",
     imageUrl: "/assets/morphic logo.svg"
   },

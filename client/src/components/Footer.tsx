@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Social icons with cyber animations
@@ -104,12 +104,58 @@ const socialIcons = [
 const Footer: React.FC = () => {
   const [tickerPosition, setTickerPosition] = useState(Math.random() * 100);
   const [email, setEmail] = useState('');
-  
+
+  // --- Flicker Logic Start ---
+  const [flickerState, setFlickerState] = useState(0);
+  const [isOn, setIsOn] = useState(true);
+
+  // Generate random flicker pattern (copied from FlickeringTubelight)
+  useEffect(() => {
+    const flickerSequence = [
+      { duration: 100, opacity: 0.3 },
+      { duration: 20, opacity: 0.8 },
+      { duration: 30, opacity: 0.2 },
+      { duration: 50, opacity: 0.9 },
+      { duration: 10, opacity: 0.1 },
+      { duration: 40, opacity: 0.7 },
+      { duration: 5, opacity: 0 },
+      { duration: 80, opacity: 0.8 },
+      { duration: 10, opacity: 0.4 },
+      { duration: 2000, opacity: 0.9 }, // Long stable period
+    ];
+
+    let currentIndex = 0;
+    let timeout: NodeJS.Timeout;
+
+    const runFlicker = () => {
+      setFlickerState(flickerSequence[currentIndex].opacity);
+
+      // Occasionally turn the light completely off
+      if (Math.random() < 0.05 && currentIndex !== flickerSequence.length - 1) { // Avoid turning off during stable period
+        setIsOn(false);
+        setTimeout(() => setIsOn(true), 80 + Math.random() * 150);
+      } else if (!isOn) {
+        // Ensure it turns back on if it was forced off
+        setIsOn(true);
+      }
+
+      timeout = setTimeout(() => {
+        currentIndex = (currentIndex + 1) % flickerSequence.length;
+        runFlicker();
+      }, flickerSequence[currentIndex].duration + Math.random() * (currentIndex === flickerSequence.length - 1 ? 50 : 150)); // Less random delay during stable
+    };
+
+    runFlicker();
+
+    return () => clearTimeout(timeout);
+  }, [isOn]); // Re-run if isOn changes externally (though it shouldn't here)
+  // --- Flicker Logic End ---
+
   // Set random ticker position on mount
-  React.useEffect(() => {
+  useEffect(() => {
     setTickerPosition(Math.random() * 100);
   }, []);
-  
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
@@ -117,14 +163,22 @@ const Footer: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Email submitted:', email);
-    // Here you would handle the actual subscription
     setEmail('');
   };
-  
+
+  // Calculate dynamic glow opacity
+  const glowOpacity = isOn ? flickerState * 0.8 : 0; // Adjust 0.8 multiplier for brightness
+
   return (
     <footer className="relative w-full overflow-hidden">
       {/* Main footer container with SESH-inspired design */}
-      <div className="sesh-footer w-full bg-[#111] border border-[#333] shadow-[inset_0_0_15px_#000] text-[#aaa] relative overflow-hidden">
+      <div
+        className="sesh-footer w-full bg-[#111] border border-[#333] shadow-[inset_0_0_15px_#000] text-[#aaa] relative overflow-hidden"
+        // Dynamic inline style for flickering box-shadow
+        style={{
+          boxShadow: `inset 0 18px 25px -10px rgba(255, 45, 85, ${glowOpacity}), inset 0 0 15px #000` // Increased spread (18px, 25px, -10px) and dynamic opacity
+        }}
+      >
         {/* Static noise overlay */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%270 0 200 200%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noiseFilter%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.65%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noiseFilter)%27 opacity=%270.1%27/%3E%3C/svg%3E')] opacity-[0.05] z-[1] pointer-events-none"></div>
         
@@ -238,19 +292,19 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <motion.div
-                  className="absolute bottom-0 left-0 w-full h-[2px]"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent 0%, rgba(255, 45, 85, 0.5) 50%, transparent 100%)'
-                  }}
-                  animate={{
-                    x: ["-100%", "100%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
+        className="absolute bottom-0 left-0 w-full h-[2px]"
+        style={{
+          background: 'linear-gradient(90deg, transparent 0%, rgba(255, 45, 85, 0.5) 50%, transparent 100%)'
+        }}
+        animate={{
+          x: ["-100%", "100%"],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
       
       {/* Copyright notice */}
       <div className="text-center text-gray-600 text-[10px] font-code py-2 bg-black">

@@ -13,6 +13,11 @@ const TeamSection: React.FC<TeamSectionProps> = ({ members }) => {
   const [glitchActive, setGlitchActive] = useState(false)
   const [randomGlitch, setRandomGlitch] = useState<string | null>(null)
 
+  // --- Corner Flicker State ---
+  const [cornerFlickerState, setCornerFlickerState] = useState(0);
+  const [cornerIsOn, setCornerIsOn] = useState(true);
+  // --- End Corner Flicker State ---
+
   // Random glitch effects throughout the component
   useEffect(() => {
     const glitchInterval = setInterval(() => {
@@ -32,8 +37,63 @@ const TeamSection: React.FC<TeamSectionProps> = ({ members }) => {
     }
   }, [members])
 
+  // --- Corner Flicker Effect ---
+  useEffect(() => {
+    const flickerSequence = [
+      { duration: 80, opacity: 0.6 },
+      { duration: 30, opacity: 0.2 },
+      { duration: 150, opacity: 0.9 }, // Brighter flash
+      { duration: 50, opacity: 0.4 },
+      { duration: 20, opacity: 0.1 },
+      { duration: 5, opacity: 0 }, // Quick off
+      { duration: 100, opacity: 0.7 },
+      { duration: 30, opacity: 0.3 },
+      { duration: 3000, opacity: 0.8 }, // Longer stable period
+    ];
+
+    let currentIndex = 0;
+    let timeout: NodeJS.Timeout;
+
+    const runFlicker = () => {
+      setCornerFlickerState(flickerSequence[currentIndex].opacity);
+
+      // Occasionally turn off more drastically
+      if (Math.random() < 0.08 && currentIndex !== flickerSequence.length - 1) {
+        setCornerIsOn(false);
+        setTimeout(() => setCornerIsOn(true), 50 + Math.random() * 100);
+      } else if (!cornerIsOn) {
+        setCornerIsOn(true);
+      }
+
+      timeout = setTimeout(() => {
+        currentIndex = (currentIndex + 1) % flickerSequence.length;
+        runFlicker();
+      }, flickerSequence[currentIndex].duration + Math.random() * 100); // Less delay variation
+    };
+
+    runFlicker();
+
+    return () => clearTimeout(timeout);
+  }, [cornerIsOn]);
+  // --- End Corner Flicker Effect ---
+
+  // Calculate dynamic corner glow opacity
+  const cornerGlowOpacity = cornerIsOn ? cornerFlickerState * 0.85 : 0; // Adjust multiplier for desired intensity
+
   return (
     <section className="py-24 bg-black text-white relative overflow-hidden">
+      {/* --- Flickering Corner Light --- */}
+      <motion.div
+        className="absolute top-0 left-0 w-[1000px] h-[400px] pointer-events-none z-[1]" // z-index between background and content
+        style={{
+          background: `radial-gradient(circle at top left, rgba(180, 0, 0, ${cornerGlowOpacity}) 0%, transparent 60%)`, // Blood red (adjust 180,0,0)
+          filter: `blur(${20 + cornerGlowOpacity * 30}px)`, // Dynamic blur based on opacity
+          opacity: cornerGlowOpacity > 0 ? 1 : 0, // Ensure it's fully hidden when opacity is 0
+          transition: 'opacity 0.1s ease-out, filter 0.1s ease-out', // Smooth transition for flicker
+        }}
+      />
+      {/* --- End Flickering Corner Light --- */}
+
       {/* Background grid effect */}
       <div className="absolute inset-0 z-0 opacity-20">
         <div className="absolute inset-0 bg-grid-pattern"></div>
@@ -59,7 +119,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ members }) => {
             transition={{ duration: 1 }}
           >
             <span className="text-red-600 relative inline-block">
-              TEAM
+              <img src="/assets/dqnlogo.svg" alt="logo" className="w-36 h-auto" />
               {glitchActive && (
                 <>
                   <span className="absolute top-0 left-0 text-cyan-500 translate-x-[2px] translate-y-[1px] opacity-70">TEAM</span>
@@ -68,7 +128,7 @@ const TeamSection: React.FC<TeamSectionProps> = ({ members }) => {
               )}
             </span>{" "}
             <span className="relative inline-block">
-              MEMBERS
+              TEAM
               {glitchActive && (
                 <>
                   <span className="absolute top-0 left-0 text-cyan-500 translate-x-[2px] translate-y-[1px] opacity-70">MEMBERS</span>

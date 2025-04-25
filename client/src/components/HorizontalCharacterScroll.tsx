@@ -17,6 +17,11 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
   const [isSticky, setIsSticky] = useState(false);
   const [hasCompletedScroll, setHasCompletedScroll] = useState(false);
   
+  // --- Top Flicker State ---
+  const [topFlickerState, setTopFlickerState] = useState(0);
+  const [topIsOn, setTopIsOn] = useState(true);
+  // --- End Top Flicker State ---
+  
   // Initial setup to get dimensions
   useEffect(() => {
     if (containerRef.current) {
@@ -37,6 +42,45 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
       window.removeEventListener('resize', updateDimensions);
     };
   }, []);
+  
+  // --- Top Flicker Effect ---
+  useEffect(() => {
+    const flickerSequence = [ // Slightly different sequence for variety
+      { duration: 120, opacity: 0.5 },
+      { duration: 40, opacity: 0.2 },
+      { duration: 100, opacity: 0.8 },
+      { duration: 60, opacity: 0.3 },
+      { duration: 10, opacity: 0.05 },
+      { duration: 5, opacity: 0 },
+      { duration: 90, opacity: 0.6 },
+      { duration: 20, opacity: 0.1 },
+      { duration: 4000, opacity: 0.7 }, // Long stable period
+    ];
+
+    let currentIndex = 0;
+    let timeout: NodeJS.Timeout;
+
+    const runFlicker = () => {
+      setTopFlickerState(flickerSequence[currentIndex].opacity);
+
+      if (Math.random() < 0.06 && currentIndex !== flickerSequence.length - 1) {
+        setTopIsOn(false);
+        setTimeout(() => setTopIsOn(true), 60 + Math.random() * 120);
+      } else if (!topIsOn) {
+        setTopIsOn(true);
+      }
+
+      timeout = setTimeout(() => {
+        currentIndex = (currentIndex + 1) % flickerSequence.length;
+        runFlicker();
+      }, flickerSequence[currentIndex].duration + Math.random() * 110);
+    };
+
+    runFlicker();
+
+    return () => clearTimeout(timeout);
+  }, [topIsOn]);
+  // --- End Top Flicker Effect ---
   
   // Handle sticky behavior and horizontal scrolling based on vertical scroll
   useEffect(() => {
@@ -99,13 +143,28 @@ const HorizontalCharacterScroll: React.FC<HorizontalCharacterScrollProps> = ({ c
     setActiveIndex(index);
   };
   
+  // Calculate dynamic top glow opacity
+  const topGlowOpacity = topIsOn ? topFlickerState * 0.6 : 0; // Adjust multiplier
+  
   return (
     <div 
       ref={sectionRef}
-      className="relative min-h-[250vh] mb-38 pt-4" 
+      className="relative min-h-[250vh] mb-38 pt-4 bg-black"
     >
+      {/* --- Flickering Top Light (Now Conditionally Sticky) --- */}
+      <motion.div
+        className={`${isSticky ? 'fixed' : 'absolute'} top-0 left-0 right-0 h-[250px] pointer-events-none z-10`}
+        style={{
+          background: `linear-gradient(to bottom, rgba(200, 0, 0, ${topGlowOpacity}) 0%, transparent 80%)`,
+          filter: `blur(${15 + topGlowOpacity * 25}px)`,
+          opacity: topGlowOpacity > 0 ? 1 : 0,
+          transition: 'opacity 0.1s ease-out, filter 0.1s ease-out',
+        }}
+      />
+      {/* --- End Flickering Top Light --- */}
+      
       {/* Header section - will be sticky */}
-      <div className={`${isSticky ? 'fixed top-5 left-0 right-0 z-30' : 'relative'}`}>
+      <div className={`${isSticky ? 'fixed top-5 left-0 right-0 z-30' : 'relative z-30'}`}>
         <h2 className="text-4xl md:text-6xl font-cyber font-bold text-center mb-0">
           <span className="text-cyberred">CAST</span> OF CHARACTERS
         </h2>
